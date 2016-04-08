@@ -66,27 +66,20 @@ class Game
     puts "What will you do? Run away or fight?"
     response = gets.chomp
     if response.downcase == "run away"
-      puts "As you turn your back, the chain wraps around your neck and tightens. #{chaimz.name} laughs and yells, 'Face your fears to live your dreams!' as your breathe your last breath."
+      message = "You must face your fears to live your dreams today!"
+      puts "As you turn your back, the chain wraps around your neck and tightens. #{chaimz.name} laughs and as your breathe your last breath, he yells, #{message}"
+      say("bad news", message)
       kill_player
     else
       fight(chaimz)
     end
     if !player_dead?
-      puts "with his dying breath, #{chaimz.name} whispers 'take off my skin- I won't cry, but you will! What am I?"
-      riddle_answer = gets.chomp
-      correct = false
-      until correct
-        if riddle_answer.downcase == "onion"
-          puts "You guessed correctly. The secret key is 39."
-          correct = true
-        elsif riddle_answer.downcase == "i don't know"
-          puts "You weakling. You deserve death."
-          kill_player
-        else
-          puts "WRONG. Guess again you noob"
-          riddle_answer = gets.chomp
-        end
-      end
+      riddle_preface = "with his dying breath, #{chaimz.name} whispers a riddle:"
+      puts riddle_preface
+      riddle = "take off my skin I wont cry, but you will! What am I?"
+      answer = "onion"
+      secret_key = "39"
+      riddle_game(riddle, answer, secret_key)
     end
   end
 
@@ -107,6 +100,14 @@ class Game
       @player.health -= change_health
       puts "Because you're a dick, you lost #{change_health}, and your health is now #{@player.health}."
       fight(bicorn)
+      if !player_dead?
+        riddle_preface = "with his dying breath, #{bicorn.name} whispers a riddle:"
+        riddle = "Tear one off and scratch my head what was red is black instead"
+        puts riddle_preface
+        answer = "match"
+        secret_key = "42"
+        riddle_game(riddle, answer, secret_key)
+      end
     end
   end
 
@@ -121,8 +122,10 @@ class Game
       @player.health -= monster_hit
       puts "You take #{monster_hit} damage"
       puts "Your current health is #{@player.health}. #{monster.name}'s health is #{monster.health}"
-      puts "swing again?"
-      answer = gets.chomp
+      unless monster_dead?(monster)
+        puts "swing again?"
+        answer = gets.chomp
+      end
       if answer.downcase == "no"
         kill_player
       end
@@ -147,6 +150,25 @@ class Game
     @player.health = 0
     @playing = false
     puts "You died"
+  end
+
+  def riddle_game(riddle, answer, secret_key)
+    say("bad news", riddle)
+    puts riddle
+    riddle_answer = gets.chomp
+    correct = false
+    until correct
+      if riddle_answer.downcase.include?(answer)
+        puts "You guessed correctly. The secret key is #{secret_key}."
+        correct = true
+      elsif riddle_answer.downcase == "i don't know"
+        puts "You weakling. You deserve death."
+        kill_player
+      else
+        puts "WRONG. Guess again you noob"
+        riddle_answer = gets.chomp
+      end
+    end
   end
 
   def say(narrator, message)
