@@ -51,6 +51,7 @@ class Game
           classroom_b
         when "kitchen"
         when "bathroom"
+          bathroom
         when "hallway"
         else
           puts "You can't go there!"
@@ -90,10 +91,9 @@ class Game
     puts "The other one says, 'please stop singing happy birthday. While you're at it, don't forget to sign up for an elective."
     puts "'Hello, #{@player.name}. Would you like some opulent unicorn secretions?', asks the two headed unicorn."
     bicorn = Monster.new("Randrewcorn", 40)
-    change_health = rand(5..20)
     answer = gets.chomp
     if answer.downcase == "yes"
-      @player.health += change_health
+      change_health
       puts "You gained #{change_health} health, your current health is #{@player.health}."
     else
       puts "You suck, wheres that ascii finger?"
@@ -109,6 +109,22 @@ class Game
         riddle_game(riddle, answer, secret_key)
       end
     end
+  end
+
+  def bathroom
+    puts "You see three doors in the bathroom hallway. Which one do you choose door 1, 2 or 3?"
+    answer = gets.chomp
+    if answer == "1"
+      change_health
+      puts "You gained #{change_health} health, Your health is now #{@player.health}"
+    else answer == "2"
+      kill_player
+      puts "Wrong choice!"
+    end
+  end
+
+  def change_health
+    @player.health += rand(5..20)
   end
 
   def fight(monster)
