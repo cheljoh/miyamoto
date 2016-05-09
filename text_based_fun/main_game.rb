@@ -123,7 +123,7 @@ class Game
       puts "Wrong choice!"
     elsif answer == "3"
       window = WhackARuby.new
-      # window.show
+      window.show
     else
       "Pschhh try again"
     end

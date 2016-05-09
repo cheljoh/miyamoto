@@ -1,4 +1,5 @@
 require 'gosu'
+# require_relative '../WhackARuby_starter.ruby'
 
 class WhackARuby < Gosu::Window
 
@@ -11,7 +12,6 @@ class WhackARuby < Gosu::Window
     #starting position
     @width = 50
     @height = 43
-    #height and width of image
     @velocity_x = 5
     @velocity_y = 5
     #how fast it moves in each direction
@@ -22,6 +22,15 @@ class WhackARuby < Gosu::Window
     @score = 0
     @playing = true
     @start_time = 0
+
+    @second_ruby = Gosu::Image.new('ruby.png')
+    @second_x = 400
+    @second_y = 400
+    @second_width = 50
+    @second_height = 43
+    @second_velocity_x = 5
+    @second_velocity_y = 5
+
   end
 
   def draw
@@ -34,10 +43,8 @@ class WhackARuby < Gosu::Window
       c = Gosu::Color::NONE
     elsif @hit == 1
       c = Gosu::Color::GREEN
-      #flashes green if hit
     elsif @hit == -1
       c = Gosu::Color::RED
-      #flashes red when not hit.
     end
     draw_quad(0, 0, c, 800, 0, c, 800, 600, c, 0, 600, c)
     @hit = 0
@@ -56,12 +63,12 @@ class WhackARuby < Gosu::Window
       @y += @velocity_y
       #moves the image
       @visible -= 1
-      @time_left = (100 - ((Gosu.milliseconds - @start_time) / 1000))
+      @time_left = (20 - ((Gosu.milliseconds - @start_time) / 1000))
       @playing = false if @time_left < 0
       @velocity_x *= -1 if @x + @width / 2 > 800 || @x - @width / 2 < 0
       @velocity_y *= -1 if @y + @height / 2 > 600 || @y - @height / 2 < 0
       #allows the image to bounce around instead of disappearing off the screen
-      @visible = 30 if @visible < -10 && rand < 0.1
+      @visible = 30 if @visible < -10 && rand < 100
     end
   end
 
@@ -87,5 +94,5 @@ class WhackARuby < Gosu::Window
   end
 end
 
-# window = WhackARuby.new
-# window.show
+window = WhackARuby.new
+window.show
