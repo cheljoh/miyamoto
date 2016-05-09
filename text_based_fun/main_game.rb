@@ -1,5 +1,6 @@
 require_relative 'player'
 require_relative 'monster'
+require_relative 'whack_a_ruby/whack_a_ruby'
 
 class Game
 
@@ -12,7 +13,7 @@ class Game
   end
 
   def start_game
-    message = "You wake up in a daze. You look around. You are in the big workspace. No on is around. No sound is heard, except for a faint whisper--"
+    message = "You wake up in a daze. You look around. You are in the big workspace. No one is around. No sound is heard, except for a faint whisper--"
     call_your_mom = "'call your mom'."
     the_feels = "How are you feeling?"
     say("Princess", message)
@@ -117,9 +118,14 @@ class Game
     if answer == "1"
       change_health
       puts "You gained #{change_health} health, Your health is now #{@player.health}"
-    else answer == "2"
+    elsif answer == "2"
       kill_player
       puts "Wrong choice!"
+    elsif answer == "3"
+      window = WhackARuby.new
+      # window.show
+    else
+      "Pschhh try again"
     end
   end
 
