@@ -32,5 +32,5 @@ class WhackARuby < Gosu::Window
 
 end
 
-window = WhackARuby.new
-window.show
+# window = WhackARuby.new
+# window.show
