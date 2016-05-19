@@ -12,6 +12,10 @@ class Game
     game_loop
   end
 
+  def getAnswer
+    gets.chomp
+  end
+
   def start_game
     message = "You wake up in a daze. You look around. You are in the big workspace. No one is around. No sound is heard, except for a faint whisper--"
     call_your_mom = "'call your mom'."
@@ -21,10 +25,10 @@ class Game
     puts message
     puts call_your_mom
     puts the_feels
-    answer = gets.chomp
+    answer = getAnswer
     puts "Oh yeah? You're feeling #{answer}? That's nice. Not that I care."
     puts "Anyways, what's your name?"
-    name = gets.chomp
+    name = getAnswer
     @player = Player.new(name)
     puts "Welcome to Turing Apocalypse, #{@player.name}."
     puts skull
@@ -44,7 +48,7 @@ class Game
     while playing
       puts "Where should we go?"
       puts map
-      location = gets.chomp
+      location = getAnswer
       case location.downcase
         when "classroom c"
           classroom_c
@@ -66,10 +70,10 @@ class Game
     puts "From the darkness emerges a huge figure wrapped in chains. He also happens to be wearing a fashionable beanie."
     puts "He says, 'Feel the wrath of #{chaimz.name}!' He whips a chain towards you."
     puts "What will you do? Run away or fight?"
-    response = gets.chomp
+    response = getAnswer
     if response.downcase == "run away"
       message = "You must face your fears to live your dreams today!"
-      puts "As you turn your back, the chain wraps around your neck and tightens. #{chaimz.name} laughs and as your breathe your last breath, he yells, #{message}"
+      puts "As you turn your back, the chain wraps around your neck and tightens. #{chaimz.name} laughs and as you breathe your last breath, he yells, #{message}"
       say("bad news", message)
       kill_player
     else
@@ -92,7 +96,7 @@ class Game
     puts "The other one says, 'please stop singing happy birthday. While you're at it, don't forget to sign up for an elective."
     puts "'Hello, #{@player.name}. Would you like some opulent unicorn secretions?', asks the two headed unicorn."
     bicorn = Monster.new("Randrewcorn", 40)
-    answer = gets.chomp
+    answer = getAnswer
     if answer.downcase == "yes"
       change_health
       puts "You gained #{change_health} health, your current health is #{@player.health}."
@@ -114,7 +118,7 @@ class Game
 
   def bathroom
     puts "You see three doors in the bathroom hallway. Which one do you choose door 1, 2 or 3?"
-    answer = gets.chomp
+    answer = getAnswer
     if answer == "1"
       change_health
       puts "You gained #{change_health} health, Your health is now #{@player.health}"
@@ -146,7 +150,7 @@ class Game
       puts "Your current health is #{@player.health}. #{monster.name}'s health is #{monster.health}"
       unless monster_dead?(monster)
         puts "swing again?"
-        answer = gets.chomp
+        answer = getAnswer
       end
       if answer.downcase == "no"
         kill_player
@@ -177,7 +181,7 @@ class Game
   def riddle_game(riddle, answer, secret_key)
     say("bad news", riddle)
     puts riddle
-    riddle_answer = gets.chomp
+    riddle_answer = getAnswer
     correct = false
     until correct
       if riddle_answer.downcase.include?(answer)
@@ -188,7 +192,7 @@ class Game
         kill_player
       else
         puts "WRONG. Guess again you noob"
-        riddle_answer = gets.chomp
+        riddle_answer = getAnswer
       end
     end
   end
