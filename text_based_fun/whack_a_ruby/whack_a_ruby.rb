@@ -5,7 +5,7 @@ class WhackARuby < Gosu::Window
   def initialize
     super(800, 600)
     self.caption = "Whack-A-Ruby!"
-    @image = Gosu::Image.new('ruby.png')
+    @image = Gosu::Image.new('feldman.gif')
     @x = 200
     @y = 200
     #starting position
@@ -16,7 +16,7 @@ class WhackARuby < Gosu::Window
     @velocity_y = 5
     #how fast it moves in each direction
     @visible = 0
-    @hammer_image = Gosu::Image.new('hammer.png')
+    @hammer_image = Gosu::Image.new('stake.png')
     @hit = 0
     @font = Gosu::Font.new(30)
     @score = 0
