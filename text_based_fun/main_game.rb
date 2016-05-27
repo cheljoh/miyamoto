@@ -12,7 +12,7 @@ class Game
     game_loop
   end
 
-  def getAnswer
+  def get_answer
     gets.chomp
   end
 
@@ -25,10 +25,10 @@ class Game
     puts message
     puts call_your_mom
     puts the_feels
-    answer = getAnswer
+    answer = get_answer
     puts "Oh yeah? You're feeling #{answer}? That's nice. Not that I care."
     puts "Anyways, what's your name?"
-    name = getAnswer
+    name = get_answer
     @player = Player.new(name)
     puts "Welcome to Turing Apocalypse, #{@player.name}."
     puts skull
@@ -48,7 +48,7 @@ class Game
     while playing
       puts "Where should we go?"
       puts map
-      location = getAnswer
+      location = get_answer
       case location.downcase
         when "classroom c"
           classroom_c
@@ -58,10 +58,41 @@ class Game
         when "bathroom"
           bathroom
         when "hallway"
+          hallway
         else
           puts "You can't go there!"
       end
     end
+  end
+
+  def hallway
+    puts "You enter the hallway. Would you like to enter classroom A or classroom B?"
+    answer = get_answer.downcase
+
+    if answer == "classroom a"
+      classroom_a_riddle
+      # classroom_a
+    elsif answer == "classroom b"
+      classroom_b
+    else
+      puts "You can't go there!"
+    end
+  end
+
+  def classroom_a_riddle
+    puts "A bespectacled figure emerges. 'Hey punk!' he says. 'To get into classroom A, you must answer the Turing Riddle of Death! There is a room with no doors, no widows, nothing and a man is hung from the ceiling and a puddle of water is on the floor. How did he die?'"
+    answer = get_answer.downcase
+    if answer.include?("ice")
+      classroom_a
+    else
+      puts "'Wrong answer punk! Go back to the big workspace! You're all wrapped-up!'"
+      changed_health = change_health("-")
+      puts "You lost #{changed_health} health, Your health is now #{@player.health}"
+    end
+  end
+
+  def classroom_a
+    puts "classroom a!!!!!"
   end
 
   def classroom_c
@@ -70,7 +101,7 @@ class Game
     puts "From the darkness emerges a huge figure wrapped in chains. He also happens to be wearing a fashionable beanie."
     puts "He says, 'Feel the wrath of #{chaimz.name}!' He whips a chain towards you."
     puts "What will you do? Run away or fight?"
-    response = getAnswer
+    response = get_answer
     if response.downcase == "run away"
       message = "You must face your fears to live your dreams today!"
       puts "As you turn your back, the chain wraps around your neck and tightens. #{chaimz.name} laughs and as you breathe your last breath, he yells, #{message}"
@@ -96,13 +127,13 @@ class Game
     puts "The other one says, 'please stop singing happy birthday. While you're at it, don't forget to sign up for an elective."
     puts "'Hello, #{@player.name}. Would you like some opulent unicorn secretions?', asks the two headed unicorn."
     bicorn = Monster.new("Randrewcorn", 40)
-    answer = getAnswer
+    answer = get_answer
     if answer.downcase == "yes"
-      change_health
+      change_health("+")
       puts "You gained #{change_health} health, your current health is #{@player.health}."
     else
       puts "You suck, wheres that ascii finger?"
-      @player.health -= change_health
+      change_health("-")
       puts "Because you're a dick, you lost #{change_health}, and your health is now #{@player.health}."
       fight(bicorn)
       if !player_dead?
@@ -118,10 +149,10 @@ class Game
 
   def bathroom
     puts "You see three doors in the bathroom hallway. Which one do you choose door 1, 2 or 3?"
-    answer = getAnswer
+    answer = get_answer
     if answer == "1"
-      change_health
-      puts "You gained #{change_health} health, Your health is now #{@player.health}"
+      changed_health = change_health
+      puts "You gained #{changed_health} health, Your health is now #{@player.health}"
     elsif answer == "2"
       kill_player
       puts "Wrong choice!"
@@ -133,8 +164,10 @@ class Game
     end
   end
 
-  def change_health
-    @player.health += rand(5..20)
+  def change_health(operation)
+    changed_health = rand(5..20)
+    @player.health = @player.health.send(operation, changed_health)
+    changed_health
   end
 
   def fight(monster)
@@ -150,7 +183,7 @@ class Game
       puts "Your current health is #{@player.health}. #{monster.name}'s health is #{monster.health}"
       unless monster_dead?(monster)
         puts "swing again?"
-        answer = getAnswer
+        answer = get_answer
       end
       if answer.downcase == "no"
         kill_player
@@ -181,7 +214,7 @@ class Game
   def riddle_game(riddle, answer, secret_key)
     say("bad news", riddle)
     puts riddle
-    riddle_answer = getAnswer
+    riddle_answer = get_answer
     correct = false
     until correct
       if riddle_answer.downcase.include?(answer)
@@ -192,7 +225,7 @@ class Game
         kill_player
       else
         puts "WRONG. Guess again you noob"
-        riddle_answer = getAnswer
+        riddle_answer = get_answer
       end
     end
   end
