@@ -20,8 +20,8 @@ class Game
     message = "You wake up in a daze. You look around. You are in the big workspace. No one is around. No sound is heard, except for a faint whisper--"
     call_your_mom = "'call your mom'."
     the_feels = "How are you feeling?"
-    say("Princess", message)
-    say("Whisper", call_your_mom)
+    # say("Princess", message)
+    # say("Whisper", call_your_mom)
     puts message
     puts call_your_mom
     puts the_feels
@@ -71,7 +71,6 @@ class Game
 
     if answer == "classroom a"
       classroom_a_riddle
-      # classroom_a
     elsif answer == "classroom b"
       classroom_b
     else
@@ -129,12 +128,12 @@ class Game
     bicorn = Monster.new("Randrewcorn", 40)
     answer = get_answer
     if answer.downcase == "yes"
-      change_health("+")
-      puts "You gained #{change_health} health, your current health is #{@player.health}."
+      changed_health = change_health("+")
+      puts "You gained #{changed_health} health, your current health is #{@player.health}."
     else
       puts "You suck, wheres that ascii finger?"
-      change_health("-")
-      puts "Because you're a dick, you lost #{change_health}, and your health is now #{@player.health}."
+      changed_health = change_health("-")
+      puts "Because you're a dick, you lost #{changed_health}, and your health is now #{@player.health}."
       fight(bicorn)
       if !player_dead?
         riddle_preface = "with his dying breath, #{bicorn.name} whispers a riddle:"
@@ -151,11 +150,11 @@ class Game
     puts "You see three doors in the bathroom hallway. Which one do you choose door 1, 2 or 3?"
     answer = get_answer
     if answer == "1"
-      changed_health = change_health
+      changed_health = change_health("+")
       puts "You gained #{changed_health} health, Your health is now #{@player.health}"
     elsif answer == "2"
-      kill_player
       puts "Wrong choice!"
+      kill_player
     elsif answer == "3"
       window = WhackARuby.new
       window.show
