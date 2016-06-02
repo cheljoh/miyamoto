@@ -9,11 +9,11 @@ class WhackARuby < Gosu::Window
     @x = 200
     @y = 200
     #starting position
-    @width = 50
-    @height = 43
+    @width = 170
+    @height = 215
     #height and width of image
-    @velocity_x = 5
-    @velocity_y = 5
+    @velocity_x = 3
+    @velocity_y = 3
     #how fast it moves in each direction
     @visible = 0
     @hammer_image = Gosu::Image.new('stake.png')
@@ -68,7 +68,7 @@ class WhackARuby < Gosu::Window
   def button_down(id)
     if @playing
       if (id == Gosu::MsLeft)
-        if Gosu.distance(mouse_x, mouse_y, @x, @y) < 50 && @visible >= 0
+        if Gosu.distance(mouse_x, mouse_y, @x, @y) < 85 && @visible >= 0
           @hit = 1
           @score += 5
         else

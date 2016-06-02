@@ -69,9 +69,9 @@ class Game
     puts "You enter the hallway. Would you like to enter classroom A or classroom B?"
     answer = get_answer.downcase
 
-    if answer == "classroom a"
+    if answer.downcase == "classroom a"
       classroom_a_riddle
-    elsif answer == "classroom b"
+    elsif answer.downcase == "classroom b"
       classroom_b
     else
       puts "You can't go there!"
@@ -91,7 +91,7 @@ class Game
   end
 
   def classroom_a
-    puts "classroom a!!!!!"
+
   end
 
   def classroom_c
@@ -158,6 +158,8 @@ class Game
     elsif answer == "3"
       window = WhackARuby.new
       window.show
+      #this doesn't work- collision detection is off
+      puts "You beat the vampire!"
     else
       "Pschhh try again"
     end
