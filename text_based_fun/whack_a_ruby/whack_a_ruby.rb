@@ -16,7 +16,7 @@ class WhackARuby < Gosu::Window
     @velocity_y = 3
     #how fast it moves in each direction
     @visible = 0
-    @hammer_image = Gosu::Image.new('stake.png')
+    @stake_image = Gosu::Image.new('stake.png')
     @hit = 0
     @font = Gosu::Font.new(30)
     @score = 0
@@ -29,7 +29,7 @@ class WhackARuby < Gosu::Window
       @image.draw(@x - @width / 2, @y - @height / 2, 1)
       #draws the image
     end
-    @hammer_image.draw(mouse_x - 40, mouse_y - 10, 1)
+    @stake_image.draw(mouse_x - 40, mouse_y - 10, 1)
     if @hit == 0
       c = Gosu::Color::NONE
     elsif @hit == 1
@@ -87,5 +87,5 @@ class WhackARuby < Gosu::Window
   end
 end
 
-# window = WhackARuby.new
-# window.show
+window = WhackARuby.new
+window.show
